@@ -1,22 +1,31 @@
 // script.js
-function clearDisplay() {
-    document.getElementById('display').innerText = '0';
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contact-form');
+    const contactList = document.getElementById('contact-list');
 
-function appendToDisplay(value) {
-    const display = document.getElementById('display');
-    if (display.innerText === '0') {
-        display.innerText = value;
-    } else {
-        display.innerText += value;
-    }
-}
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
 
-function calculateResult() {
-    const display = document.getElementById('display');
-    try {
-        display.innerText = eval(display.innerText);
-    } catch (e) {
-        display.innerText = 'Error';
+        if (name && phone && email) {
+            addContact(name, phone, email);
+            contactForm.reset();
+        }
+    });
+
+    function addContact(name, phone, email) {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <span>${name} - ${phone} - ${email}</span>
+            <button class="delete-btn" onclick="deleteContact(this)">Delete</button>
+        `;
+        contactList.appendChild(li);
     }
+});
+
+function deleteContact(button) {
+    const li = button.parentElement;
+    li.remove();
 }
