@@ -1,31 +1,22 @@
 // script.js
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contact-form');
-    const contactList = document.getElementById('contact-list');
+function clearDisplay() {
+    document.getElementById('display').innerText = '0';
+}
 
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value;
-        const phone = document.getElementById('phone').value;
-        const email = document.getElementById('email').value;
-
-        if (name && phone && email) {
-            addContact(name, phone, email);
-            contactForm.reset();
-        }
-    });
-
-    function addContact(name, phone, email) {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <span>${name} - ${phone} - ${email}</span>
-            <button class="delete-btn" onclick="deleteContact(this)">Delete</button>
-        `;
-        contactList.appendChild(li);
+function appendToDisplay(value) {
+    const display = document.getElementById('display');
+    if (display.innerText === '0') {
+        display.innerText = value;
+    } else {
+        display.innerText += value;
     }
-});
+}
 
-function deleteContact(button) {
-    const li = button.parentElement;
-    li.remove();
+function calculateResult() {
+    const display = document.getElementById('display');
+    try {
+        display.innerText = eval(display.innerText);
+    } catch (e) {
+        display.innerText = 'Error';
+    }
 }
